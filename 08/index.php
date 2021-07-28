@@ -30,6 +30,36 @@ for ($i=0; $i < 10; $i++) {
 print_r($arr);
 echo "<hr>";
 diveDeep($arr);
+echo "<hr>";
+$result = diveDeepAndSum($arr);
+echo "<hr>";
+echo $result*20;
+echo "<hr>";
+
+echo diveDeepAndSum() * 20;
+
+function diveDeepAndSum($item = 0){
+
+    if(!is_array($item)){
+        if(!is_numeric($item)){
+            return 0;
+        }
+        return $item;
+    }
+
+    $sum = 0;
+    foreach ($item as $innerItem) {
+        if(is_array($innerItem)){
+            $sum += diveDeepAndSum($innerItem);
+        } else{
+            echo $innerItem." ";
+            $sum += $innerItem;
+        }
+    }
+    
+    return $sum;
+}
+
 
 function diveDeep($item){
     if( is_array($item)){
@@ -41,9 +71,8 @@ function diveDeep($item){
             }
         }
     }else{
-    echo $item." ";
-}
-
+        echo $item." ";
+    }
 }
 
 
@@ -60,6 +89,42 @@ function recursion ($count){
 
 
 
+// makeCoffe("late");
 
+// function makeCoffe($type){
+//     switch ($type) {
+//         case 'late':
+//             makeLate();
+//             break;
+//         case 'espresso':
+//             makeEspresso();
+//             break;
+//     }
+// }
+
+// function makeLate(){
+//     if(checkIngredients('Late')){
+//         boilWater();
+//         prepateTheCup();
+//         pourWater();
+//         returnCup();
+//     }
+// }
+
+// function makeEspresso(){
+//     if(checkIngredients('Espresso')){
+//         boilWater();
+//         prepateTheCup();
+//         pourWater();
+//         returnCup();
+//     }
+// }
+
+// function boilWater(){
+//     echo " verdu vandeni ir laukiu kol uzvirs";
+// }
+// function prepateTheCup(){
+//     echo " Pastatau puodeli";
+// }
 
 ?>
