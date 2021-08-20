@@ -61,7 +61,7 @@ function diveDeepAndSum($item = 0){
 }
 
 
-function diveDeep($item){
+function diveDeep($item){// grazina ne visa suma nzn kodel
     if( is_array($item)){
         foreach ($item as $innerItem) {
             if(is_array($innerItem)){
