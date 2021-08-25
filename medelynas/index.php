@@ -115,7 +115,8 @@ include('./PlantTypeController.php');
         </tr>
 
 
-        <?php $count = 0; foreach (allOld() as $plant) { 
+        <?php $count = 0; foreach (all() as $plant) { 
+
             $checked = "";
             if( $plant['is_yearling'] ){
                 $checked = "checked";
