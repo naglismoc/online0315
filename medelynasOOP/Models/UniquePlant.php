@@ -1,12 +1,12 @@
 <?php
 include('../../Models/DB.php');
 
-class PlantType{
+class UniquePlant{
 
     public $id;
-    public $name;
-    public $is_yearling;
-    public $quantity;
+    public $age;
+    public $height;
+    public $health;
 
     function __constructor(){
     
@@ -14,39 +14,40 @@ class PlantType{
 
     public static function  all(){
         $conn = connection();
-        $sql = "SELECT `plant_types`.`id`, `name`, `is_yearling`,
-                        (SELECT COUNT(*)
-                        FROM `unique_plants`
-                        WHERE `unique_plants`.`plant_id` = `plant_types`.`id`) as 'quantity'
-                        FROM `unique_plants` right join `plant_types`
-                        ON `plant_types`.`id` = `unique_plants`.`plant_id`
-                        GROUP by `plant_types`.`id`;";
+        $sql = 'SELECT * from `unique_plants` where plant_id ='.$_GET['id'];
         $result = $conn->query($sql);
     
         $all = [];
         while($row = $result->fetch_assoc()) {
-            $plant = new PlantType();
+            $plant = new UniquePlant();
             $plant->id = $row['id'];
-            $plant->is_yearling = $row['is_yearling'];
-            $plant->quantity = $row['quantity'];
-            $plant->name = $row['name'];
+            $plant->age = $row['age'];
+            $plant->height = $row['height'];
+            $plant->health = $row['health'];
             $all[] = $plant;
         }
         $conn->close();
         return $all;
     }
-
+    public static function findType($id){
+        $conn = connect();
+        $sql = 'SELECT * from `plants` where id ='.$id;
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result->fetch_assoc();
+    }
     public static function  find($id){
         $conn = connection();
-        $sql = 'SELECT * from `plant_types` where id ='.$id;
+        $sql = 'SELECT * from `unique_plants` where id ='.$id;
         $result = $conn->query($sql);
         $conn->close();
         $resultPlant = $result->fetch_assoc();
 
-        $plant = new PlantType();
+        $plant = new UniquePlant();
         $plant->id = $resultPlant['id'];
-        $plant->name = $resultPlant['name'];
-        $plant->is_yearling = $resultPlant['is_yearling'];
+        $plant->age = $resultPlant['age'];
+        $plant->height = $resultPlant['height'];
+        $plant->health = $resultPlant['health'];
 
         return $plant;
     }
@@ -57,8 +58,8 @@ class PlantType{
             $checked = 1;
         }
         $conn = connection();
-        $sql = 'INSERT INTO `plant_types`(`id`, `name`, `is_yearling`) VALUES (NULL,"'.$_POST['name'].'",'.$checked.')';
-        // echo $sql;die;
+        $sql = 'INSERT INTO `plants`(`id`, `name`, `is_yearling`, `quantity`) VALUES (NULL,"'.$_POST['name'].'","'.$_POST['is_yearling'].'","'.$_POST['quantity'].'")';
+
         $conn->query($sql);
         $conn->close();
     }
@@ -70,14 +71,13 @@ class PlantType{
         }
         // echo $checked;die;
         $conn = connection();
-        $sql = 'UPDATE `plant_types` SET `name`="'.$_POST['name'].'",`is_yearling`='.$checked.' WHERE id = '.$_POST['update'];
-        //  echo $sql;die;
+        $sql ='UPDATE `unique_plants` SET `age` = "'.$_POST['age'].'", `height` = "'.$_POST['height'].'", `health` = "'.$_POST['health'].'" WHERE `unique_plants`.`id` ='.$_POST['update'];
         $conn->query($sql);
         $conn->close();
     }
     public static function destroy($id){
         $conn = connection();
-        $sql = "DELETE FROM `plant_types` WHERE id=".$id;
+        $sql = "DELETE FROM `unique_plants` WHERE id=".$id;
         $conn->query($sql);
         $conn->close();
     }

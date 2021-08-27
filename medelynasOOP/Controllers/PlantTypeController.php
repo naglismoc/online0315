@@ -1,7 +1,7 @@
 <?php
-include('../Models/PlantType.php');
+include('../../Models/PlantType.php');
  if(isset($_GET['plants'] )){
-    header("location:./plants.php?id=".$_GET['plants']);
+    header("location:../uniquePlants/uniquePlants.php?id=".$_GET['plants']);
     die;
 }
 if(!isset($_POST['create']) &&
@@ -12,28 +12,25 @@ if(!isset($_POST['create']) &&
     }
 
 if(isset($_POST['create'] )){
-    store();
-    header("location:./");
+    PlantType::store();
+    header("location:./plantTypes.php");
     die;
 }
 
 if(isset($_POST['update'] )){
-    update();
-    header("location:./");
+    PlantType::update();
+    header("location:./plantTypes.php");
     die;
 }
 
 if(isset($_POST['delete'] )){
-    destroy($_POST['delete']);
-    header("location:./");
+    PlantType::destroy($_POST['delete']);
+    header("location:./plantTypes.php");
     die; 
 }
 
-$action = 'create';
-
 if(isset($_GET['edit'] )){
-        $plant = find($_GET['edit']);
-        $action = 'update';
+        $plant = PlantType::find($_GET['edit']);
     }
 
 

@@ -1,11 +1,11 @@
 
-<?= include("./menu.php")?>
-<?= include("../Controllers/PlantTypeController.php")?>
+<?php include("../../Controllers/PlantTypeController.php");
 
 
 
 
 
+ include("../menu.php"); ?>
 <table class="table">
         <tr>
         <th>Id</th> 
@@ -30,7 +30,7 @@
                     <a class="btn btn-primary" href="?plants=<?= $plant->id  ?>">augalai</a>
                 </td>
                 <td>
-                    <a class="btn btn-success" href="?edit=<?= $plant->id  ?>">edit</a>
+                    <a class="btn btn-success" href="./edit.php?edit=<?= $plant->id  ?>">edit</a>
                 </td>
                 <td>
                     <form action="" method="post">
@@ -42,8 +42,6 @@
     </table>
 
 
+    <?php include("../footer.php");?>
 
 
-
-</body>
-</html>
